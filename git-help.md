@@ -121,7 +121,7 @@ git config --unset credential.helper
 Add the `--global` flag if you want to remove cached credentials globally.
 
 Also, refer to [this link](https://stackoverflow.com/questions/44246876/how-to-remove-cached-credentials-from-git) and [this link](https://git-scm.com/docs/git-credential-cache) to know more.
-Remember that this will not work unless you've put in your username and PTA (as password) at least once before.
+Remember that this will not work unless you've put in your username and [PAT](https://docs.github.com/en/github/authenticating-to-github/keeping-your-account-and-data-secure/creating-a-personal-access-token) (as password) at least once before.
 
 # Problems
 
