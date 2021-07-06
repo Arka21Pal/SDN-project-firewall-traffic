@@ -1,5 +1,3 @@
-##### Linux credential caching doesn't work right now. Will have to find alternatives.
-
 # pushing to a private git repo.
 
 ## initialise git repo.
@@ -86,8 +84,7 @@ git checkout dev
 Refer [this](https://git-scm.com/book/en/v2/Git-Branching-Basic-Branching-and-Merging) link for more info.
 
 # Quirks
-- In windows, a browser tab will open up, and you will have to authenticate yourself (username, account password) once. After that, it will work properly.
-- On Linux, however, as of 2021-07-06, I have not found any alternative other than putting in my username and [PTA](https://docs.github.com/en/github/authenticating-to-github/keeping-your-account-and-data-secure/creating-a-personal-access-token) (which need sto be copied somewhere safe, as GitHub only shows it to you once.). It's repetitive, and boring, and annoying. Working on a solution.
+- On windows, a browser tab will open up, and you will have to authenticate yourself (username, account password) once. After that, it will work properly.
 
 You can also [cache your credentials in git](https://docs.github.com/en/get-started/getting-started-with-git/caching-your-github-credentials-in-git), however that didn't work for me on Linux.
 
@@ -109,18 +106,36 @@ git config --global credential.helper wincred
 
 ## linux
 
-1. In Terminal, enter the following:
-
 ```
-$ git config --global credential.helper cache
-# Set git to use the credential memory cache
+git config credential.helper store
 ```
 
-2. To change the default password cache timeout, enter the following:
+Obviously, add the `--global` parameter if you want to cache credentials globally.
+
+If you want to remove cached credentials from git,
 
 ```
-$ git config --global credential.helper 'cache --timeout=3600'
-# Set the cache to timeout after 1 hour (setting is in seconds)
+git config --unset credential.helper
 ```
 
-Obviously, remove the `--global` parameter if you want to cache credentials only for the specific repository.
+Add the `--global` flag if you want to remove cached credentials globally.
+
+Also, refer to [this link](https://stackoverflow.com/questions/44246876/how-to-remove-cached-credentials-from-git) and [this link](https://git-scm.com/docs/git-credential-cache) to know more.
+Remember that this will not work unless you've put in your username and PTA (as password) at least once before.
+
+# Problems
+
+## Error: `src refspec master does not match any`
+
+Solution: 
+
+Type the following command to see the `ref`s currently in use.
+```
+git show-ref
+```
+
+If the `ref`s you want are not present here, run `git fetch -u origin`. This will update the `ref`s, at least partially (like, when I ran it, it oulled down the `main` branch and added it as a `ref`, but didn't pull down the `dev` branch).
+When a branch you want isn't present, simply run `git checkout -b dev`. Of course, this is assuming that the `dev` branch is already present in the online repo (yes, `dev` already existed before I ran `checkout`).
+DO NOT, UNDER ANY CIRCUMSTANCES, CHECKOUT TO A NEW BRANCH. IT'LL WILL MAKE A TERRIBLE MESS OF THE PROJECT. TAKE RESPONSIBILITY FOR THE COMMANDS YOU RUN.
+
+Refer to [this link](https://stackoverflow.com/questions/4181861/message-src-refspec-master-does-not-match-any-when-pushing-commits-in-git), [this link](https://stackoverflow.com/questions/40202284/error-src-refspec-does-not-match-any), and [the documentation](https://git-scm.com/docs/git-push#git-push-ltrefspecgt82308203) for `ref-spec`. These should be enough.
