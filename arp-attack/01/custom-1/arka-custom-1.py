@@ -38,6 +38,10 @@ class MyTopo(Topo): # defining a simple topology
         self.addLink(Host7, Switch4)
         self.addLink(Host8, Switch4)
         self.addLink(Host9, Switch4)
+        self.addLink(Switch4, Switch1)
+
+        self.addLink(Switch1, Switch3)
+        self.addLink(Switch2, Switch4)
 
 topos = {'mytopo':(lambda: MyTopo())}
 
