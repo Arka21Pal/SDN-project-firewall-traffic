@@ -107,7 +107,7 @@ git config --global credential.helper wincred
 ## linux
 
 ```
-git config credential.helper store
+git config --global credential.helper 'cache --timeout=<time_in_seconds>'
 ```
 
 Obviously, add the `--global` parameter if you want to cache credentials globally.
