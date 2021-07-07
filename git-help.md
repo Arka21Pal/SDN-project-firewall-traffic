@@ -142,3 +142,41 @@ When a branch you want isn't present, simply run `git checkout -b dev`. Of cours
 DO NOT, UNDER ANY CIRCUMSTANCES, CHECKOUT TO A NEW BRANCH. IT'LL WILL MAKE A TERRIBLE MESS OF THE PROJECT. TAKE RESPONSIBILITY FOR THE COMMANDS YOU RUN.
 
 Refer to [this link](https://stackoverflow.com/questions/4181861/message-src-refspec-master-does-not-match-any-when-pushing-commits-in-git), [this link](https://stackoverflow.com/questions/40202284/error-src-refspec-does-not-match-any), and [the documentation](https://git-scm.com/docs/git-push#git-push-ltrefspecgt82308203) for `ref-spec`. These should be enough.
+
+## How to change a Git commit message after a push
+
+Link: https://www.educative.io/edpresso/how-to-change-a-git-commit-message-after-a-push
+
+>## If the message to be changed is for the latest commit to the repository, then the following commands are to be executed:
+>
+>```
+>git commit --amend -m "New message"
+>```
+>
+>```
+>git push --force repository-name branch-name
+>```
+>
+>A safer alternative is to use:
+>```
+>git push --force-with-lease repository-name branch-name
+>```
+>
+>## If the message needs to be amended for an older commit, then the *interactive rebase tool* can be used:
+>1. Navigate to the repository that contains the commit you want to amend and open a terminal window.
+>2. Use the `git rebase -i HEAD~n` command to display a list of the last `n` commits in your default text editor. For example, the following command would display a list of the last three commits in your current branch:
+>```
+>git rebase -i HEAD~3 
+>```
+>3. Replace `pick` with `reword` before each commit message that needs to be changed.
+>4. Save and close the commit list file.
+
+Now, it will open up another file, which will the message you push for the edits in the commit messages.
+Simply write something like `Corrected the commit <copy the commit from ``git log`` or the GitHub GUI>, and pushing changes`.
+
+Save and close that file.
+
+Finally, perform a `git pull origin <branch>` (generally `breaking`).
+Finally, `git push -u origin <branch>` - again, generally `breaking`.
+
+When you're done with this, it will take the commit message you just entered (or if it opens an editor, put in a commit message now), and save that. It will merge the changes in the branch.
