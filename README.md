@@ -9,3 +9,10 @@ The commands for git, are placed [here](./git-help.md), for the ease of use of t
 This repository will hold all of our code, configuration, and even thoughts and experiences (if possible) while doing the project. Of course, expecting an ideal outcome is unrealisitic. But that's OK. One has to dream for the best, to achieve something close to it.
 
 I sincerely hope that we can make a coherent and a fun project by the end of the official period (6 months approx), and that we will learn from it. Cheers :) 
+
+The structure of the branches is like this:
+
+`breaking` is unstable, and will see frequent changes.
+`dev` is downstream to `breaking`, so by design it is more stable, however it will get slightly slower updates.
+`main` is the stable branch, it will recieve the slowest updates, which will be after we've verified `dev` functions properly.
+
