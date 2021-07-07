@@ -88,7 +88,41 @@ git checkout dev
 
 Refer [this](https://git-scm.com/book/en/v2/Git-Branching-Basic-Branching-and-Merging) link for more info.
 
-### merging specific commits between branches
+## watching differences in commits between branches
+
+This will show you commits that branch-2 has but branch-1 doesn't.
+
+```
+git log <branch-1>..<branch-2> --oneline --no-merges
+```
+Of course, it depends on which branch you're checked out to.
+
+>If you want to see which files are actually modified use
+
+```
+git diff --stat origin/master..origin/develop --no-merges
+```
+I understand that it's getting a bit messy with the names, but you get the point. To compare the branches, put in the *appropriate* branches instead of what's in the sample commands. 
+
+>In case you want to compare it with current branch. It is more convenient to use HEAD instead of branch name like use:
+
+```
+git log origin/master..HEAD --oneline --no-merges
+```
+>I'd suggest the following to see the difference "in commits". For symmetric difference, repeat the command with inverted args:
+
+```
+git cherry -v master [your branch, or HEAD as default]
+```
+>Is this different from git master..branch-X? 
+
+>Sure, "git cherry" is smart: it translates from "commits" into "patches/diffs" and can avoid reporting a "patch" which is on both branches but applied in different order
+
+>This works especially well with patch-based workflows where commits are often cherry-picked and applied to other branches.
+
+Refer to [this](https://stackoverflow.com/questions/13965391/how-do-i-see-the-commit-differences-between-branches-in-git) link.
+
+## merging specific commits between branches
 
 Let's say you need to only merge a single commit, from `breaking` to `dev`. Here are the steps,
 
