@@ -1,3 +1,5 @@
+# Remember that not all branches have to remain complacent with each other. `breaking` might have the most commits, `dev` will have the bleeding edge, but relatively stable commits. `main` will have older code, which will be rebased on a specified schedule.
+
 # pushing to a private git repo.
 
 ## initialise git repo.
@@ -85,6 +87,24 @@ git checkout dev
     ```
 
 Refer [this](https://git-scm.com/book/en/v2/Git-Branching-Basic-Branching-and-Merging) link for more info.
+
+### merging specific commits between branches
+
+Let's say you need to only merge a single commit, from `breaking` to `dev`. Here are the steps,
+
+- Pull down the branch locally. Use your git GUI or pull it down on the command line, whatever you'd like.
+- Get back into the branch you're merging *into*. You'll likely do this by running 
+    ```
+    git checkout dev
+    ```
+- Find the commits you want to pull into your branch. Go run either the `git log -- pretty` or visit the GitHub UI and grab the unique commit hashes for each of the commits that you want.
+- "Cherry pick" the commits you want into this branch. Run this command: 
+    ```
+    git cherry-pick <super-long-hash-here>
+    ```
+    That will pull just this commit into your current branch.
+
+Refer to [this](https://mattstauffer.com/blog/how-to-merge-only-specific-commits-from-a-pull-request/) link.
 
 # Quirks
 - On windows, a browser tab will open up, and you will have to authenticate yourself (username, account password) once. After that, it will work properly.
