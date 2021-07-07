@@ -75,11 +75,14 @@ git checkout dev
     ```
     git merge dev
     ```
+    However, if you'd like to edit the MERGE_MSG, type 
+    ```
+    git merge dev --edit
+    ```
 - push to `main`.
     ```
     git push -u origin main
     ```
-
 
 Refer [this](https://git-scm.com/book/en/v2/Git-Branching-Basic-Branching-and-Merging) link for more info.
 
@@ -107,7 +110,7 @@ git config --global credential.helper wincred
 ## linux
 
 ```
-git config credential.helper store
+git config --global credential.helper 'cache --timeout=<time_in_seconds>'
 ```
 
 Obviously, add the `--global` parameter if you want to cache credentials globally.
