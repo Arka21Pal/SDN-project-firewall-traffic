@@ -6,6 +6,11 @@
 ```
 git init
 ```
+If you're on Windows, and if you want git to set `main` as the default branch for every repo from now on, run:
+
+```
+git config --global init.defaultBranch main
+```
 
 ## tracking changes in file(s)
 ```
