@@ -6,6 +6,11 @@
 ```
 git init
 ```
+If you're on Windows, and if you want git to set `main` as the default branch for every repo from now on, run:
+
+```
+git config --global init.defaultBranch main
+```
 
 ## tracking changes in file(s)
 ```
@@ -52,7 +57,7 @@ git push -u origin main
 git checkout -b dev
 ```
 
-If you've already created a branch, 
+If you've already created a branch,
 ```
 git checkout dev
 ```
@@ -77,7 +82,7 @@ git checkout dev
     ```
     git merge dev
     ```
-    However, if you'd like to edit the MERGE_MSG, type 
+    However, if you'd like to edit the MERGE_MSG, type
     ```
     git merge dev --edit
     ```
@@ -102,7 +107,11 @@ Of course, it depends on which branch you're checked out to.
 ```
 git diff --stat origin/master..origin/develop --no-merges
 ```
+<<<<<<< HEAD
 I understand that it's getting a bit messy with the names, but you get the point. To compare the branches, put in the *appropriate* branches instead of what's in the sample commands. 
+=======
+I understand that it's getting a bit messy with the names, but you get the point. To compare the branches, put in the *appropriate* branches instead of what's in the sample commands.
+>>>>>>> main
 
 >In case you want to compare it with current branch. It is more convenient to use HEAD instead of branch name like use:
 
@@ -114,7 +123,11 @@ git log origin/master..HEAD --oneline --no-merges
 ```
 git cherry -v master [your branch, or HEAD as default]
 ```
+<<<<<<< HEAD
 >Is this different from git master..branch-X? 
+=======
+>Is this different from git master..branch-X?
+>>>>>>> main
 
 >Sure, "git cherry" is smart: it translates from "commits" into "patches/diffs" and can avoid reporting a "patch" which is on both branches but applied in different order
 
@@ -127,12 +140,20 @@ Refer to [this](https://stackoverflow.com/questions/13965391/how-do-i-see-the-co
 Let's say you need to only merge a single commit, from `breaking` to `dev`. Here are the steps,
 
 - Pull down the branch locally. Use your git GUI or pull it down on the command line, whatever you'd like.
+<<<<<<< HEAD
 - Get back into the branch you're merging *into*. You'll likely do this by running 
+=======
+- Get back into the branch you're merging *into*. You'll likely do this by running
+>>>>>>> main
     ```
     git checkout dev
     ```
 - Find the commits you want to pull into your branch. Go run either the `git log -- pretty` or visit the GitHub UI and grab the unique commit hashes for each of the commits that you want.
+<<<<<<< HEAD
 - "Cherry pick" the commits you want into this branch. Run this command: 
+=======
+- "Cherry pick" the commits you want into this branch. Run this command:
+>>>>>>> main
     ```
     git cherry-pick <super-long-hash-here>
     ```
@@ -184,7 +205,7 @@ Remember that this will not work unless you've put in your username and [PAT](ht
 
 ## Error: `src refspec master does not match any`
 
-Solution: 
+Solution:
 
 Type the following command to see the `ref`s currently in use.
 ```
@@ -220,7 +241,11 @@ Link: https://www.educative.io/edpresso/how-to-change-a-git-commit-message-after
 >1. Navigate to the repository that contains the commit you want to amend and open a terminal window.
 >2. Use the `git rebase -i HEAD~n` command to display a list of the last `n` commits in your default text editor. For example, the following command would display a list of the last three commits in your current branch:
 >```
+<<<<<<< HEAD
 >git rebase -i HEAD~3 
+=======
+>git rebase -i HEAD~3
+>>>>>>> main
 >```
 >3. Replace `pick` with `reword` before each commit message that needs to be changed.
 >4. Save and close the commit list file.
