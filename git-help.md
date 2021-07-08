@@ -1,3 +1,5 @@
+# Remember that not all branches have to remain complacent with each other. `breaking` might have the most commits, `dev` will have the bleeding edge, but relatively stable commits. `main` will have older code, which will be rebased on a specified schedule.
+
 # pushing to a private git repo.
 
 ## initialise git repo.
@@ -50,7 +52,7 @@ git push -u origin main
 git checkout -b dev
 ```
 
-If you've already created a branch, 
+If you've already created a branch,
 ```
 git checkout dev
 ```
@@ -75,7 +77,7 @@ git checkout dev
     ```
     git merge dev
     ```
-    However, if you'd like to edit the MERGE_MSG, type 
+    However, if you'd like to edit the MERGE_MSG, type
     ```
     git merge dev --edit
     ```
@@ -85,6 +87,58 @@ git checkout dev
     ```
 
 Refer [this](https://git-scm.com/book/en/v2/Git-Branching-Basic-Branching-and-Merging) link for more info.
+
+## watching differences in commits between branches
+
+This will show you commits that branch-2 has but branch-1 doesn't.
+
+```
+git log <branch-1>..<branch-2> --oneline --no-merges
+```
+Of course, it depends on which branch you're checked out to.
+
+>If you want to see which files are actually modified use
+
+```
+git diff --stat origin/master..origin/develop --no-merges
+```
+I understand that it's getting a bit messy with the names, but you get the point. To compare the branches, put in the *appropriate* branches instead of what's in the sample commands.
+
+>In case you want to compare it with current branch. It is more convenient to use HEAD instead of branch name like use:
+
+```
+git log origin/master..HEAD --oneline --no-merges
+```
+>I'd suggest the following to see the difference "in commits". For symmetric difference, repeat the command with inverted args:
+
+```
+git cherry -v master [your branch, or HEAD as default]
+```
+>Is this different from git master..branch-X?
+
+>Sure, "git cherry" is smart: it translates from "commits" into "patches/diffs" and can avoid reporting a "patch" which is on both branches but applied in different order
+
+>This works especially well with patch-based workflows where commits are often cherry-picked and applied to other branches.
+
+Refer to [this](https://stackoverflow.com/questions/13965391/how-do-i-see-the-commit-differences-between-branches-in-git) link.
+
+## merging specific commits between branches
+
+Let's say you need to only merge a single commit, from `breaking` to `dev`. Here are the steps,
+
+- Pull down the branch locally. Use your git GUI or pull it down on the command line, whatever you'd like.
+- Get back into the branch you're merging *into*. You'll likely do this by running
+    ```
+    git checkout dev
+    ```
+- Find the commits you want to pull into your branch. Go run either the `git log -- pretty` or visit the GitHub UI and grab the unique commit hashes for each of the commits that you want.
+- "Cherry pick" the commits you want into this branch. Run this command:
+    ```
+    git cherry-pick <super-long-hash-here>
+    ```
+    That will pull just this commit into your current branch.
+
+Refer to [this](https://mattstauffer.com/blog/how-to-merge-only-specific-commits-from-a-pull-request/) link.
 
 # Quirks
 - On windows, a browser tab will open up, and you will have to authenticate yourself (username, account password) once. After that, it will work properly.
@@ -130,7 +184,7 @@ Remember that this will not work unless you've put in your username and [PAT](ht
 
 ## Error: `src refspec master does not match any`
 
-Solution: 
+Solution:
 
 Type the following command to see the `ref`s currently in use.
 ```
@@ -166,7 +220,7 @@ Link: https://www.educative.io/edpresso/how-to-change-a-git-commit-message-after
 >1. Navigate to the repository that contains the commit you want to amend and open a terminal window.
 >2. Use the `git rebase -i HEAD~n` command to display a list of the last `n` commits in your default text editor. For example, the following command would display a list of the last three commits in your current branch:
 >```
->git rebase -i HEAD~3 
+>git rebase -i HEAD~3
 >```
 >3. Replace `pick` with `reword` before each commit message that needs to be changed.
 >4. Save and close the commit list file.
