@@ -19,10 +19,10 @@ class MyTopo(Topo): # defining a simple topology
 
         # Add switches
 
-        Switch1 = self.addHost('s1')
-        Switch2 = self.addHost('s2')
-        Switch3 = self.addHost('s3')
-        Switch4 = self.addHost('s4')
+        Switch1 = self.addSwitch('s1')
+        Switch2 = self.addSwitch('s2')
+        Switch3 = self.addSwitch('s3')
+        Switch4 = self.addSwitch('s4')
 
         # Link devices
 
