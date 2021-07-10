@@ -16,7 +16,9 @@ The structure of the branches is like this:
 `dev` is downstream to `breaking`, so by design it is more stable, however it will get slightly slower updates.
 `main` is the stable branch, it will receive the slowest updates, which will be after we've verified `dev` functions properly.
 
-Workflow (Credits to Harshal for original draft and Arka for mild edits):
+# Workflow 
+
+*Credits to Harshal for original draft and Arka for mild edits)* :
 
 - Open git bash.
 - `cd` ..your_path../SDN-project-firewall-traffic. You will be in the main folder.
