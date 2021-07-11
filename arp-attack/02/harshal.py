@@ -18,10 +18,12 @@ class MyTopo( Topo ):
         "Create custom topo."
 
         # Add hosts and switches
-        leftHost = self.addHost( 'h1' )
-        rightHost = self.addHost( 'h2' )
-        leftSwitch = self.addSwitch( 's3' )
-        rightSwitch = self.addSwitch( 's4' )
+        h1 = self.addHost( 'h1' )
+        h2 = self.addHost( 'h2' )
+        h3 = self.addHost( 'h3' )
+        s1 = self.addSwitch( 's1' )
+        s2 = self.addSwitch( 's2' )
+        s3 = self.addSwitch( 's3' )
 
         # Add links
         self.addLink( leftHost, leftSwitch )
