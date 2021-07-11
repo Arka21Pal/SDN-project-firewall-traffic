@@ -17,13 +17,20 @@ class MinimalTopo( Topo ):
         # Create two hosts.
         h1 = self.addHost( 'h1' )
         h2 = self.addHost( 'h2' )
-
+        h3 = self.addHost( 'h3' )
+        h4 = self.addHost( 'h4' )
         # Create a switch
         s1 = self.addSwitch( 's1' )
+        s2 = self.addSwitch( 's2' )
 
         # Add links between the switch and each host
         self.addLink( s1, h1 )
         self.addLink( s1, h2 )
+        self.addLink( s2, h3 )
+        self.addLink( s2, h4 )
+
+        # Add a link between the switches
+        self.addLink( s1, s2 )
 
 def runMinimalTopo():
     "Bootstrap a Mininet network using the Minimal Topology"
@@ -35,7 +42,7 @@ def runMinimalTopo():
     # a remote controller.
     net = Mininet(
         topo=topo,
-        controller=lambda name: RemoteController( name, ip='127.0.0.1' ),
+        controller=lambda name: RemoteController(ovsc, ip='127.0.0.1'),
         switch=OVSSwitch,
         autoSetMacs=True )
 
