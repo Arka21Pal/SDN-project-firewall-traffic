@@ -42,6 +42,9 @@ git branch -M main
     git remote add origin https://username@github.com/username/repo-name.git
     ```
     *or*
+
+    *This is specifically for private repositories. If you want to add a public repo do it like you it in Linux.*
+
 - Linux
     ```
     git remote add origin https://github.com/username/repo-name.git
@@ -166,7 +169,7 @@ If you want to cache credentials for the entire system,
 git config --global credential.helper wincred
 ```
 
-## linux
+## Linux
 
 ```
 git config --global credential.helper 'cache --timeout=<time_in_seconds>'
@@ -196,7 +199,7 @@ Type the following command to see the `ref`s currently in use.
 git show-ref
 ```
 
-If the `ref`s you want are not present here, run `git fetch -u origin`. This will update the `ref`s, at least partially (like, when I ran it, it oulled down the `main` branch and added it as a `ref`, but didn't pull down the `dev` branch).
+If the `ref`s you want are not present here, run `git fetch -u origin`. This will update the `ref`s, at least partially (like, when I ran it, it pulled down the `main` branch and added it as a `ref`, but didn't pull down the `dev` branch).
 When a branch you want isn't present, simply run `git checkout -b dev`. Of course, this is assuming that the `dev` branch is already present in the online repo (yes, `dev` already existed before I ran `checkout`).
 DO NOT, UNDER ANY CIRCUMSTANCES, CHECKOUT TO A NEW BRANCH. IT'LL WILL MAKE A TERRIBLE MESS OF THE PROJECT. TAKE RESPONSIBILITY FOR THE COMMANDS YOU RUN.
 
