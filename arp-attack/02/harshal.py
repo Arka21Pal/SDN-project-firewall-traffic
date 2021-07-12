@@ -1,17 +1,6 @@
-# This file is for Harshal to store his config
-"""Custom topology example
-
-Two directly connected switches plus a host for each switch:
-
-   host --- switch --- switch --- host
-
-Adding the 'topos' dict with a key/value pair to generate our newly defined
-topology enables one to pass in '--topo=mytopo' from the command line.
-"""
-
 from mininet.topo import Topo
 
-class mytopo( Topo ):
+class MyTopo( Topo ):
     "Simple topology example."
 
     def __init__(self):
@@ -32,6 +21,4 @@ class mytopo( Topo ):
         self.addLink( h3, s3 )
         self.addlink( s1, s2)
         self.addlink( s2, s3)
-
-
-topos = { 'mytopo': ( lambda: mytopo() ) }
+topos = { 'mytopo': ( lambda: MyTopo() ) }
