@@ -1,3 +1,5 @@
+# Command to run this: sudo mn --custom filename --topo mytopo
+
 from mininet.topo import Topo  
 class MyTopo( Topo ):  
     "Simple topology example."
