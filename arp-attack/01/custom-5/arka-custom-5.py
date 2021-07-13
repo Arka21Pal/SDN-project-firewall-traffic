@@ -42,7 +42,7 @@ def runMinimalTopo():
     # a remote controller.
     net = Mininet(
         topo=topo,
-        controller=lambda name: RemoteController(ovsc, ip='127.0.0.1'),
+        controller=lambda name: RemoteController(pox, ip='127.0.0.1'),
         switch=OVSSwitch,
         autoSetMacs=True )
 
