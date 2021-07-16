@@ -1,21 +1,46 @@
-'''
- LINKS:
+#!/usr/bin/python
 
--  https://www.brianlinkletter.com/2015/04/using-the-pox-sdn-controller/
--  https://github.com/mininet/mininet/wiki/Introduction-to-Mininet#creating
--  https://stackoverflow.com/questions/37390208/how-to-properly-connect-remote-controller-pox-to-mininet
--  http://intronetworks.cs.luc.edu/current/html/mininet.html#openflow-and-the-pox-controller
--  https://www.coursera.org/lecture/sdn/customizing-sdn-control-part-1-switching-tlYKf
-- https://noxrepo.github.io/pox-doc/html/#invoking-pox
+from mininet.topolib import TreeTopo
+from mininet.net import Mininet
+from mininet.util import dumpNodeConnections
+from mininet.log import setLogLevel
 
-These links should be enough to get the final, integrated script running. We're aiming to utlise the POX controller, because I honestly can't say how much we would need to scale.
+class treetopo():
+    # initiliasing values
+    def __init__(self, d, f):
+        self.d=d
+        self.f=f
 
-Now, the method:
+    # Making a Tree Topology
+    def build(self):
+        return TreeTopo(depth=self.d, fanout=self.f)  
 
-- Run the POX controller by running sudo python3 ~/pox/pox/pox.py forwarding.hub (we're running the hub mechanism right now, but we will transition to the learning_12 mechanism soon)
-- Then, in another window (guys, learn tmux/screen), execute the topology. If everything is right (rarely), then the 'ovsk' programmed switches will connect to the POX controller, and the hosts will be able to ping each other.
+# Take user input 
+depth = int(input('\nplease mention the depth of the topo you want to create: '))
+fanout = int(input('\nplease mention the fanout of the topo you want to create: '))
+test = str(input('\nTo select the test pingAll(), type 1. To select iperf(), type 2: '))
 
-'''
+# forming a function with values from the user input into the treetopo class.
+a_topo = treetopo(depth, fanout)
 
+def simpleTest():
+    # Create and test a simple network
+    topo = a_topo.build()
+    net = Mininet(topo)
+    net.start()
+    print( "Dumping host connections" )
+    dumpNodeConnections(net.hosts)
+    print( "Testing network connectivity" )
+    if test == '1':
+        net.pingAll()
+    elif test == '2':
+        net.iperf()
+    else:
+        print('\nsorry, wrong option')
+    # net.pingAll()
+    net.stop()
 
-
+if __name__ == '__main__':
+    # Tell mininet to print useful information
+    setLogLevel('info')
+    simpleTest()
