@@ -1,4 +1,4 @@
-# Remember that not all branches have to remain complacent with each other. `breaking` might have the most commits, `dev` will have the bleeding edge, but relatively stable commits. `main` will have older code, which will be rebased on a specified schedule.
+# Remember that not all branches have to remain complacent with each other. We will merge/cherry-pick commits from the branch we're on, to the main branch, as soon as we confirm that it is stable.
 
 # pushing to a private git repo.
 
@@ -55,12 +55,12 @@ git branch -M main
 git push -u origin main
 ```
 
-## changing to the `dev` branch
+## changing to the `dev` branch (this is just an example, discuss the name of the branch on the group so we don't get confused)
 ```
 git checkout -b dev
 ```
 
-If you've already created a branch,
+If you've already created a branch (also an example),
 ```
 git checkout dev
 ```
@@ -148,7 +148,20 @@ Let's say you need to only merge a single commit, from `breaking` to `dev`. Here
 
 Refer to [this](https://mattstauffer.com/blog/how-to-merge-only-specific-commits-from-a-pull-request/) link.
 
+## Deleting branches
+
+### Locally,
+
+`git branch -D <branch-name>`
+
+### Remote branch,
+
+`git push -u origin --delete <branch-name>`
+
+Do not get the branch name wrong. It follows that one shouldn't give different branches similar names.
+
 # Quirks
+
 - On windows, a browser tab will open up, and you will have to authenticate yourself (username, account password) once. After that, it will work properly.
 
 You can also [cache your credentials in git](https://docs.github.com/en/get-started/getting-started-with-git/caching-your-github-credentials-in-git), however that didn't work for me on Linux.
@@ -199,7 +212,7 @@ Type the following command to see the `ref`s currently in use.
 git show-ref
 ```
 
-If the `ref`s you want are not present here, run `git fetch -u origin`. This will update the `ref`s, at least partially (like, when I ran it, it pulled down the `main` branch and added it as a `ref`, but didn't pull down the `dev` branch).
+If the `ref`s you want are not present here, run `git fetch -u origin`. This will update the `ref`s, at least partially (like, when I ran it, it pulled down the `main` branch and added it as a `ref`, but didn't pull down the `dev` branch).\
 When a branch you want isn't present, simply run `git checkout -b dev`. Of course, this is assuming that the `dev` branch is already present in the online repo (yes, `dev` already existed before I ran `checkout`).
 DO NOT, UNDER ANY CIRCUMSTANCES, CHECKOUT TO A NEW BRANCH. IT'LL WILL MAKE A TERRIBLE MESS OF THE PROJECT. TAKE RESPONSIBILITY FOR THE COMMANDS YOU RUN.
 
