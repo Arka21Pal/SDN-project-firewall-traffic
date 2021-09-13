@@ -21,7 +21,7 @@ The structure of the branches is like this:
 *Credits to Harshal for original draft and Arka for mild edits)* :
 
 - Open git bash.
-- `cd` ..your_path../SDN-project-firewall-traffic. You will be in the main folder.
+- `cd ..your_path../SDN-project-firewall-traffic`. You will be in the main folder.
 - Switch to the branch you're working in, for example if your branch is called `breaking`, switch to the `breaking` branch: `git checkout breaking`
 - Pull the branch: `git pull origin breaking`
 - Open the project folder in `vscode` (or any suitable editor) and start editing.
