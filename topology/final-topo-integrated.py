@@ -15,7 +15,7 @@ class treetopo():
     def build(self):
         return TreeTopo(depth=self.d, fanout=self.f)  
 
-# Take user input 
+# Take user input
 depth = int(input('\nplease mention the depth of the topo you want to create: '))
 fanout = int(input('\nplease mention the fanout of the topo you want to create: '))
 test = str(input('\nTo select the test pingAll(), type 1. To select iperf(), type 2: '))
