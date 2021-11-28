@@ -10,9 +10,7 @@ latestTag="$(git describe --tags "$(git rev-list --tags --max-count=1)")"
 printf "\n%s%s" "Checking out to " "${latestTag}"
 git checkout "${latestTag}"
 
-cd "$HOME" || return
-
-./mininet/util/install.sh -a
+./util/install.sh -a
 
 printf "\n\n%s\n" "Testing mininet installation"
 sudo mn --switch ovsbr --test pingall
