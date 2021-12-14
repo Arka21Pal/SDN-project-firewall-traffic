@@ -2,7 +2,7 @@
 
 This project is built on the premise that, with how complex the architecture is of SDN, a pluggable and portable firewall is of the utmost importance. In SDN, the controller is the brain of the network. Thus, it is only natural to expect that every attack on an SDN system, will either directly or indirectly, target the controller.
 
-By design, the SDN controller is susceptible to many network attacks, some of which are quite common to the traditional networking domain. In this project, we started with research on how to build a network topology, taking into account the nuances of creating a project on a virtual infrastructure. Mininet provides an end-to-end emulation of the network, thus allowing to test most, if not all variations of traffic flow, encapsulating attacks, countermeasures and general traffic flow.
+By design, the SDN controller is susceptible to many network attacks, some of which are quite common in the traditional networking domain. In this project, we started with research on how to build a network topology, taking into account the nuances of creating a project on a virtual infrastructure. Mininet provides an end-to-end emulation of the network, thus allowing to test most, if not all variations of traffic flow, encapsulating attacks, countermeasures and general traffic flow.
 
 Manipulating traffic has always been a core tenet of the SDN philosophy, which aims to bring the best out of both existing and new hardware. Opportunities to optimise existing methods to engage with the network, have propelled SDN to greater heights,but have also exposed the framework to new dangers.
 
