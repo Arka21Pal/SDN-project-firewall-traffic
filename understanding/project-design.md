@@ -14,9 +14,7 @@ The aim of this project is to attempt to build a modular firewall system, which 
 
 ## Flowchart
 
-This is the flowchart:  
-
-![Flowchart](https://drive.google.com/file/d/1hick7KSNajuRe5CCO0T0U-Ac_CDb61qQ/view?usp=sharing)
+[This](https://drive.google.com/file/d/1hick7KSNajuRe5CCO0T0U-Ac_CDb61qQ/view) is the flowchart.
 
 ## Explanation of flowchart (workflow)
 
