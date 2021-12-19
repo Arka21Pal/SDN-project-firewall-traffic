@@ -1,4 +1,4 @@
-#!/usr/bin/python
+#!/bin/python3
 
 from mininet.topolib import TreeTopo
 from mininet.net import Mininet
@@ -6,14 +6,14 @@ from mininet.util import dumpNodeConnections
 from mininet.log import setLogLevel
 
 class treetopo():
-    # initiliasing values
+    # initialising values
     def __init__(self, d, f):
         self.d=d
         self.f=f
 
     # Making a Tree Topology
     def build(self):
-        return TreeTopo(depth=self.d, fanout=self.f)  
+        return TreeTopo(depth=self.d, fanout=self.f)
 
 # Take user input
 depth = int(input('\nplease mention the depth of the topo you want to create: '))
