@@ -3,6 +3,8 @@
 # The idea is to be able to choose between the different subparts of the two different attacks
 
 # For arp attack,
+# Start the controller with
+# ryu-manager --verbose p3_ryu_manager.py
 # sudo mn --custom "${ARP_TOPO}" --topo=mytopo --controller=remote,ip=127.0.0.1
 # To simulate ARP attacks,
 # H2 and H4 cannot send HTTP traffic amongst each other, so
@@ -33,62 +35,124 @@
 # https://github.com/arunnair018/DDoS-detection-and-mitigation-in-SDN-controller
 # https://www.youtube.com/watch?v=Jqg5hy_2w1w (01:33)
 
-
 PROJECT_PATH="${HOME}/git-repos/SDN-project-firewall-traffic/"
 
-ARP_PART="${PROJECT_PATH}/arp/"
-ARP_TOPO="${ARP_PART}/p3_custom_topology.py"
-ARP_CONTROLLER="${ARP_PART}/p3_ryu_manager.py"
+arp_flag=0
+ddos_flag=0
+topology_flag=0
+controller_flag=0
+comment_flag=0
 
-printf "\n%s" "What would you like to run?"
-printf "\n%s" "To run the ARP topology, press \"t\""
-printf "\n%s" "To run the controller with rules for ARP, press \"c\""
-if read -r arp_option; then
-    if [ "${arp_option}" = "t" ]; then
+while getopts "hadtcC" option
+do
+    case ${option} in
+        h)
+            printf "%s\n%s\n%s\n%s\n%s\n%s\n%s" "This script takes multiple flags, but no arguments" \
+                "The flag \"-h\" shows this help message" \
+                "The flag \"-a\" allows running the components related to ARP" \
+                "The flag \"-d\" allows running the componenets related to DDoS" \
+                "The flag \"-t\" runs the commands to form the topology in relation to whichever attack you've chosen" \
+                "The flag \"-c\" runs the controller with the firewall rules for the respective attack" \
+                "The flag \"-C\" displays comments on what to run in order to see logs for the attack and the prevention"
+            exit
+            ;;
+        a)
+            arp_flag=1
+            ;;
+        d)
+            ddos_flag=1
+            ;;
+        t)
+            topology_flag=1
+            ;;
+        c)
+            controller_flag=1;
+            ;;
+        C)
+            comment_flag=1
+            ;;
+        ?)
+            printf "Usage: %s: [-a] [-d] [-t] [-c] [-C] args\n" "${0}"
+            exit 2
+            ;;
+        esac
+done
+
+if [ "${arp_flag}" = 1 ]; then
+
+    ddos_flag=0
+
+    ARP_PART="${PROJECT_PATH}/arp/"
+    ARP_TOPO="${ARP_PART}/p3_custom_topology.py"
+    ARP_CONTROLLER="${ARP_PART}/p3_ryu_manager.py"
+
+    if [ "${comment_flag}" = 1 ]; then
+        printf "\n%s\n%s\n%s\n%s\n%s\n%s\n%s" "After the topology is running and is connected to the controller, please execute the following commands" \
+            "This is to showcase that with the firewall running, H2 and H4 cannot send HTTP traffic amongst themselves" \
+            "> h2 python3 -m http.server 80 &" \
+            "> h4 wget -O - h2" \
+            "To show that H1 and H4 cannot send UDP traffic amongst each other" \
+            "> h1 iperf -s -u -i 1 &" \
+            "> h4 iperf -c 10.0.0.1 -u -b 1m -n 1000"
+
+        topology_flag=0
+        controller_flag=0
+        # exit 0
+    fi
+
+    if [ "${topology_flag}" = 1 ]; then
+        printf "\n%s\n%s\n%s" "To run the topology without the controller, i.e. to show the attack, press \"n\"" \
+            "To run the topology with the controller, i.e. to show the prevention, press \"c\"" \
+            "-> "
+        read -r control
+        if [ "${control}" = "c" ]; then
+            sudo mn --custom "${ARP_TOPO}" --topo=mytopo --controller=remote,ip=127.0.0.1
+        fi
+        if [ "${control}" = "n" ]; then
+            sudo mn --custom "${ARP_TOPO}" --topo=mytopo
+        fi
+    fi
+    if [ "${topology_flag}" = 1 ]; then
         sudo mn --custom "${ARP_TOPO}" --topo=mytopo --controller=remote,ip=127.0.0.1
-    elif [ "${arp_option}" = "c" ]; then
-        ryu-manager "${ARP_MANAGER}"
+    fi
 
-printf "\n%s" "After the topology is running and is connected to the controller, please execute the following:"
-printf "\n%s" "This is to showcase that with the firewall running, H2 and H4 cannot send HTTP traffic amongst themselves"
-printf "\n%s" "> h2 python3 -m http.server 80 &"
-printf "\n%s" "> h4 wget -O - h2"
-printf "\n%s" "H1 and H4 cannot send UDP traffic amongst each other"
-printf "\n%s" "> h1 iperf -s -u -i 1 &"
-printf "\n%s" "> h4 iperf -c 10.0.0.1 -u -b 1m -n 1000"
+    if [ "${controller_flag}" = 1 ]; then
+        ryu-manager --verbose "${ARP_CONTROLLER}"
+    fi
+fi
 
+if [ "${ddos_flag}" = 1 ]; then
 
+    arp_flag=0
 
-# tmux select-pane -L 2> /dev/null
-# tmux select-pane -R 2> /dev/null
-# tmux split-window -h 2> /dev/null
+    if [ "${comment_flag}" = 1 ]; then
+        printf "\n%s\n%s\n%s\n%s\n%s\n%s\n%s" "First, we need to check if \"detect.py\" and \"l3.py\" exist in \"\$HOME/pox/pox/forwarding\"" \
+            "After the topology is running and is connected to the controller, please execute the following commands" \
+            "To simulate DDoS traffic between H4 and H1, please enter" \
+            "> h4 sudo hping3 --faster --rand-source 10.0.0.1" \
+            "To show the same attack working without the firewall, do not start the controller, and run the topology without the \"--remote\" option, i.e.;" \
+            "$ sudo mn --topo=tree,2,3" \
+            "> h4 sudo hping3 --faster 10.0.0.1"
 
+        topology_flag=0
+        controller_flag=0
+        # exit 0
+    fi
 
+    if [ "${topology_flag}" = 1 ]; then
+        printf "\n%s\n%s\n%s" "To run the topology without the controller, i.e. to show the attack, press \"n\"" \
+            "To run the topology with the controller, i.e. to show the prevention, press \"c\"" \
+            "-> "
+        read -r control
+        if [ "${control}" = "c" ]; then
+            sudo mn --topo=tree,2,3 --controller=remote,ip=127.0.0.1
+        fi
+        if [ "${control}" = "n" ]; then
+            sudo mn --topo=tree,2,3
+        fi
+    fi
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-# sudo python3 "${1}"
-# 
-# printf "\n%s" "Cleanup?: "
-# read -r op
-# if [ "${op}" = "y" ] || [ "${op}" = "Y" ]; then
-#     sudo mn -c
-# fi
+    if [ "${controller_flag}" = 1 ]; then
+        "$HOME/pox/pox.py" "forwarding.l3"
+    fi
+fi
