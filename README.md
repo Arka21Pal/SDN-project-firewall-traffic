@@ -15,4 +15,4 @@ The basic idea here is to prevent ARP and DDoS attacks in the simulated topologi
         - Take care to read the prompts, as they will change how the topology and the attacks operate (i.e. if the firewall works, attacks don't work and vice-versa).
     - The `-C` flag is for comments related to the demonstration of a certain attack. Use it with an "attack flag". I.e. `-aC` will show comments for an `ARP` attack. `-dC` for `DDoS`.
 
-This work is not completely original. However, I have ironed out some kinks, and the project is confirmed to be working with `python3.8` as of 2022-03-15.
+This work is not completely original. However, I have ironed out some kinks, and the project is confirmed to be working with `python 3.8` as of 2022-03-15.
