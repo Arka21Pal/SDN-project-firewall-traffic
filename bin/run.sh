@@ -37,6 +37,16 @@
 
 PROJECT_PATH="${HOME}/git-repos/SDN-project-firewall-traffic/"
 
+help() {
+    printf "%s\n%s\n%s\n%s\n%s\n%s\n%s" "This script takes multiple flags, but no arguments" \
+        "The flag \"-h\" shows this help message" \
+        "The flag \"-a\" allows running the components related to ARP" \
+        "The flag \"-d\" allows running the componenets related to DDoS" \
+        "The flag \"-t\" runs the commands to form the topology in relation to whichever attack you've chosen" \
+        "The flag \"-c\" runs the controller with the firewall rules for the respective attack" \
+        "The flag \"-C\" displays comments on what to run in order to see logs for the attack and the prevention"
+}
+
 arp_flag=0
 ddos_flag=0
 topology_flag=0
@@ -47,13 +57,7 @@ while getopts "hadtcC" option
 do
     case ${option} in
         h)
-            printf "%s\n%s\n%s\n%s\n%s\n%s\n%s" "This script takes multiple flags, but no arguments" \
-                "The flag \"-h\" shows this help message" \
-                "The flag \"-a\" allows running the components related to ARP" \
-                "The flag \"-d\" allows running the componenets related to DDoS" \
-                "The flag \"-t\" runs the commands to form the topology in relation to whichever attack you've chosen" \
-                "The flag \"-c\" runs the controller with the firewall rules for the respective attack" \
-                "The flag \"-C\" displays comments on what to run in order to see logs for the attack and the prevention"
+            help
             exit
             ;;
         a)
@@ -78,12 +82,18 @@ do
         esac
 done
 
+if [ ${OPTIND} -eq 1 ]; then
+    printf "\n%s" "No options passed. Please check this brief guide to understand how to use this script."
+    help
+fi
+shift $((OPTIND-1))
+# printf "\n%s%s" "Number of non-option arguments: " "${#}"
+
 if [ "${arp_flag}" = 1 ]; then
 
     ddos_flag=0
 
     ARP_PART="${PROJECT_PATH}/arp/"
-    ARP_TOPO="${ARP_PART}/p3_custom_topology.py"
     ARP_CONTROLLER="${ARP_PART}/p3_ryu_manager.py"
 
     if [ "${comment_flag}" = 1 ]; then
@@ -106,14 +116,11 @@ if [ "${arp_flag}" = 1 ]; then
             "-> "
         read -r control
         if [ "${control}" = "c" ]; then
-            sudo mn --custom "${ARP_TOPO}" --topo=mytopo --controller=remote,ip=127.0.0.1
+            sudo mn --topo=tree,2,2 --controller=remote,ip=127.0.0.1
         fi
         if [ "${control}" = "n" ]; then
-            sudo mn --custom "${ARP_TOPO}" --topo=mytopo
+            sudo mn --topo=tree,2,2
         fi
-    fi
-    if [ "${topology_flag}" = 1 ]; then
-        sudo mn --custom "${ARP_TOPO}" --topo=mytopo --controller=remote,ip=127.0.0.1
     fi
 
     if [ "${controller_flag}" = 1 ]; then
