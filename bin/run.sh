@@ -94,7 +94,7 @@ if [ "${arp_flag}" = 1 ]; then
     ddos_flag=0
 
     ARP_PART="${PROJECT_PATH}/arp/"
-    ARP_CONTROLLER="${ARP_PART}/p3_ryu_manager.py"
+    ARP_CONTROLLER="${ARP_PART}/ryu_firewall_rules.py"
 
     if [ "${comment_flag}" = 1 ]; then
         printf "\n%s\n%s\n%s\n%s\n%s\n%s\n%s" "After the topology is running and is connected to the controller, please execute the following commands" \
