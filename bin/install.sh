@@ -2,7 +2,7 @@
 
 printf "\n%s%s\n" "Installing mininet at " "$HOME"
 cd "$HOME" || return
-git clone git://github.com/mininet/mininet
+git clone https://github.com/mininet/mininet
 
 cd mininet || return
 

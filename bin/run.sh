@@ -35,7 +35,7 @@
 # https://github.com/arunnair018/DDoS-detection-and-mitigation-in-SDN-controller
 # https://www.youtube.com/watch?v=Jqg5hy_2w1w (01:33)
 
-PROJECT_PATH="${HOME}/git-repos/SDN-project-firewall-traffic/"
+PROJECT_PATH="${HOME}/repos/SDN-project-firewall-traffic/"
 
 help() {
     printf "%s\n%s\n%s\n%s\n%s\n%s\n%s" "This script takes multiple flags, but no arguments" \
