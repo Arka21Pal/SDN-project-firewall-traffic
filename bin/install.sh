@@ -12,6 +12,9 @@ git checkout "${latestTag}"
 
 ./util/install.sh -a
 
+# Install ovs switch
+sudo apt-get install openvswitch-switch -y
+
 printf "\n\n%s\n" "Testing mininet installation"
 sudo mn --switch ovsbr --test pingall
 sudo mn --version
